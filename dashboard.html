@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNRC - Sistema de Documentos Académicos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: #5e0c31;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-container img {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo-container h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .user-profile img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            height: 100vh;
+            padding: 1rem 0;
+            position: fixed;
+            left: 0;
+            top: 64px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 900;
+            overflow-y: auto;
+        }
+        
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        
+        .sidebar-toggle {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #5e0c31;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar-toggle:hover {
+            background-color: #5e0c31;
+        }
+        
+        .menu-item {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            border-radius: 0;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .menu-item:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .menu-item.active {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+            font-weight: bold;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .menu-icon {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            margin-left: 250px;
+            padding: 2rem;
+            margin-top: 64px;
+            transition: all 0.3s ease;
+        }
+        
+        .content.expanded {
+            margin-left: 70px;
+        }
+        
+        .welcome-banner {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #5e0c31;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 200px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a73e8;
+        }
+        
+        .card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .recent-documents {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .document-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .document-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .document-icon {
+            color: #ea4335;
+            font-size: 1.5rem;
+        }
+        
+        .document-name {
+            font-weight: 500;
+        }
+        
+        .document-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .action-button {
+            background-color: transparent;
+            border: none;
+            color: #1a73e8;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .action-button:hover {
+            background-color: #e8f0fe;
+        }
+        
+        .announcement-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .announcement-item {
+            padding: 1rem;
+            border-left: 3px solid #1a73e8;
+            background-color: #f8f9fa;
+            margin-bottom: 1rem;
+        }
+        
+        .announcement-date {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .announcement-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .announcement-content {
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.8rem;
+            margin-left: 250px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer.expanded {
+            margin-left: 70px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar.collapsed {
+                width: 0;
+                padding: 0;
+            }
+            
+            .content {
+                margin-left: 70px;
+            }
+            
+            .content.expanded {
+                margin-left: 0;
+            }
+            
+            .footer {
+                margin-left: 70px;
+            }
+            
+            .footer.expanded {
+                margin-left: 0;
+            }
+            
+            .card-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="/Downloads/URC.png" alt="Logo UNRC">
+            <h1>UNRC</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#">Inicio</a>
+            <a href="#">Documentos</a>
+            <a href="#">Solicitudes</a>
+            <a href="#">Ayuda</a>
+        </div>
+        
+        <div class="user-profile">
+            <span>Evelin Pazos</span>
+            <img src="/Downloads/Estidiante.jpg" alt="Perfil">
+        </div>
+    </nav>
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="menu-item active">
+            <div class="menu-icon">📊</div>
+            <span>Dashboard</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">📁</div>
+            <span>Mis Documentos</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">🔍</div>
+            <span>Estado de Solicitudes</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">📚</div>
+            <span>Historial Académico</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">🏆</div>
+            <span>Calificaciones</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">📱</div>
+            <span>Credencial Digital</span>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">⚙️</div>
+            <span>Configuración</span>
+        </div>
+        
+        <button class="sidebar-toggle" id="sidebar-toggle">
+            ≡
+        </button>
+    </aside>
+    
+    <main class="content" id="content">
+        <section class="welcome-banner">
+            <h2 class="welcome-title">Bienvenida, Eve!</h2>
+            <p>Accede rápidamente a tus documentos académicos y realiza nuevas solicitudes desde tu panel personalizado.</p>
+        </section>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-icon">📄</div>
+                <h3>Solicitar Constancia</h3>
+                <p>Genera constancias de estudio, alumno regular o exámenes.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🎓</div>
+                <h3>Certificado Analítico</h3>
+                <p>Visualiza e imprime tu certificado analítico de materias aprobadas.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3>Credencial Digital</h3>
+                <p>Accede a tu credencial digital universitaria.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔍</div>
+                <h3>Seguimiento</h3>
+                <p>Consulta el estado de tus solicitudes en trámite.</p>
+            </div>
+        </div>
+        
+        <section class="recent-documents">
+            <h3 class="section-title">Documentos Recientes</h3>
+            
+            <div class="document-item">
+                <div class="document-info">
+                    <div class="document-icon">📄</div>
+                    <div>
+                        <div class="document-name">Constancia de Alumno Regular</div>
+                        <div class="document-date">Generado: 10/03/2025</div>
+                    </div>
+                </div>
+                <button class="action-button">Descargar</button>
+            </div>
+            
+            <div class="document-item">
+                <div class="document-info">
+                    <div class="document-icon">📄</div>
+                    <div>
+                        <div class="document-name">Certificado de Examen</div>
+                        <div class="document-date">Generado: 02/03/2025</div>
+                    </div>
+                </div>
+                <button class="action-button">Descargar</button>
+            </div>
+            
+            <div class="document-item">
+                <div class="document-info">
+                    <div class="document-icon">📄</div>
+                    <div>
+                        <div class="document-name">Historial Académico</div>
+                        <div class="document-date">Generado: 25/02/2025</div>
+                    </div>
+                </div>
+                <button class="action-button">Descargar</button>
+            </div>
+        </section>
+        
+        <section class="announcement-section">
+            <h3 class="section-title">Anuncios Importantes</h3>
+            
+            <div class="announcement-item">
+                <div class="announcement-date">15/03/2025</div>
+                <div class="announcement-title">Nuevos documentos disponibles</div>
+                <div class="announcement-content">
+                    Se han agregado nuevos tipos de constancias disponibles para solicitud inmediata. Revisa la sección de documentos.
+                </div>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNRC - Generador de Constancias</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="/api/placeholder/40/40" alt="Logo UNRC">
+            <h1>SisDoc UNRC</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="dashboard.html">Inicio</a>
+            <a href="#">Documentos</a>
+            <a href="#" class="active">Solicitudes</a>
+            <a href="#">Ayuda</a>
+        </div>
+        
+        <div class="user-profile">
+            <span id="userName">Juan Estudiante</span>
+            <img src="/api/placeholder/35/35" alt="Perfil">
+        </div>
+    </nav>
+  
+    <main class="content" id="content">
+        <h1 class="page-title">Generador de Constancias</h1>
+        
+        <div class="form-container">
+            <div class="form-section">
+                <h2 class="form-title">Datos de la Constancia</h2>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreInstitucion">Nombre de la Escuela/Institución:</label>
+                            <select id="nombreInstitucion" class="form-control" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS AZCAPOTZALCO">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS AZCAPOTZALCO</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS COYOACÁN">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS COYOACÁN</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS GUSTAVO A. MADERO">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS GUSTAVO A. MADERO</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS JUSTO SIERRA">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS JUSTO SIERRA</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS LA MAGDALENA CONTRERAS">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS LA MAGDALENA CONTRERAS</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS CASCO SANTO TOMÁS">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS CASCO SANTO TOMÁS</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS EUZKADI">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS EUZKADI</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS MAZA DE JUÁREZ">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS MAZA DE JUÁREZ</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS HERRERÍAS">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS HERRERÍAS</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS MILPA ALTA">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS MILPA ALTA</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS CHIAPAS">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS CHIAPAS</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS TIJUANA">UNIVERSIDAD ROSARIO CASTELLANOS CAMPUS TIJUANA</option>
+                                <option value="UNIVERSIDAD ROSARIO CASTELLANOS MODALIDAD A DISTANCIA">UNIVERSIDAD ROSARIO CASTELLANOS MODALIDAD A DISTANCIA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="matricula"> Matricula :</label>
+                            <input type="text" id="matricula" class="form-control" placeholder="Ej: UNRC-2025-001">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreAlumno">Nombre Completo del Alumno:</label>
+                            <input type="text" id="nombreAlumno" class="form-control" placeholder="Ej: Juan Carlos Pérez">
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="grado">Semestre:</label>
+                            <select id="grado" class="form-control" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="Primer semestre">Primer semestre</option>
+                                <option value="Segundo semestre">Segundo semestre</option>
+                                <option value="Tercer semestre">Tercer semestre</option>
+                                <option value="Cuarto semestre">Cuarto semestre</option>
+                                <option value="Quinto semestre">Quinto semestre</option>
+                                <option value="Sexto semestre">Sexto semestre</option>
+                                <option value="Séptimo semestre">Séptimo semestre</option>
+                                <option value="Octavo semestre">Octavo semestre</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>               
+                  <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="cicloEscolar">Ciclo Escolar:</label>
+                            <select id="cicloEscolar" class="form-control" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="2025-1">2025-1</option>
+                            </select>
+                        </div>
+                    </div>   
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreDirector">Nombre del Director/a:</label>
+                            <select id="nombreDirector" class="form-control" required>
+                                <option value="Dra. Alma Herrera Márquez">Dra. Alma Herrera Márquez</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="carrera">Carrera:</label>
+                            <select id="carrera" class="form-control" required>
+                            <option value="" disabled selected>Selecciona una carrera</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="preview-btn" id="previewBtn">Vista Previa</button>
+                <button class="generate-btn" id="generateBtn">Generar PDF</button>
+            </div>
+        </div>
+        
+        <div class="preview-container" id="previewContainer">
+            <h2 class="preview-title">Vista Previa de la Constancia</h2>
+            
+            <div id="certificatePreview">
+                <div class="certificate-header">
+                    <img src="/api/placeholder/150/100" alt="Logo Institucional" class="certificate-logo">
+                    <h1 class="certificate-title">CONSTANCIA DE ESTUDIOS</h1>
+                </div>
+                
+                <div class="certificate-body" id="certificateContent">
+                    <!-- El contenido se llenará dinámicamente con JavaScript -->
+                </div>
+                
+                <div class="certificate-signature">
+                    <div class="signature-line"></div>
+                    <strong><span id="signatureName">NOMBRE DEL DIRECTOR/A</span></strong><br>
+                    DIRECTOR/A
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

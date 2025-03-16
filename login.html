@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNRC - Sistema de Documentos Académicos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            color: #5e0c31;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            color: #5f6368;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #202124;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.2s;
+        }
+        
+        .form-group input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .error-message {
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .login-status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .login-status.error {
+            background-color: #fce8e6;
+            color: #5e0c31;
+            border: 1px solid #5e0c31;
+        }
+
+        .login-status.success {
+            background-color: #e6f4ea;
+            color: #188038;
+            border: 1px solid #188038;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+        }
+        
+        .forgot-password {
+            color: #5e0c31;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .login-button {
+            background-color: #a17920;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        
+        .login-button:hover {
+            background-color: #a17920;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #5f6368;
+        }
+        
+        .register-link a {
+            color: #a17920;
+            text-decoration: none;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #1a73e8;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <img src= "" alt="" class="logo">
+            <h1>Sistema de documentos </h1>
+            <p>Universidad Nacional Rosario Castellanos</p>
+        </div>
+        
+        <div id="loginStatus" class="login-status"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Matricula</label>
+                <input type="text" id="username" name="username" autocomplete="username" required>
+                <div class="error-message" id="username-error">Por favor ingrese su matricula</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+                <div class="error-message" id="password-error">Por favor ingrese su contraseña.</div>
+            </div>
+            
+            <div class="form-actions">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Recordarme</label>
+                </div>
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            </div>
+            
+            <button type="submit" class="login-button">Iniciar Sesión</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Verificando credenciales...</p>
+            </div>
+        </form>
+        
+        <div class="register-link">
+            ¿No tienes una cuenta? <a href="#">Registrarse</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Resetear mensajes de estado y error
+            document.getElementById('username-error').style.display = 'none';
+            document.getElementById('password-error').style.display = 'none';
+            const loginStatus = document.getElementById('loginStatus');
+            loginStatus.style.display = 'none';
+            loginStatus.classList.remove('error', 'success');
+            
+            // Obtener valores
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Validación básica
+            let isValid = true;
+            
+            if (!username) {
+                document.getElementById('username-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!password) {
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Mostrar spinner de carga
+                document.getElementById('loading').style.display = 'block';
+                
+                // Simulamos una llamada a API (reemplazar con una llamada real a backend)
+                setTimeout(function() {
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Credenciales demo para prueba (en un sistema real, esto se verificaría en el servidor)
+                    if (username === 'usuario@unrc.edu.ar' && password === 'password123') {
+                        // Login exitoso
+                        loginStatus.textContent = '¡Inicio de sesión exitoso! Redirigiendo...';
+                        loginStatus.classList.add('success');
+                        loginStatus.style.display = 'block';
+                        
+                        // Almacenar información de sesión en sessionStorage
+                        sessionStorage.setItem('userLoggedIn', 'true');
+                        sessionStorage.setItem('userName', 'Juan Estudiante');
+                        
+                        // Redirigir al dashboard después de un breve retraso
+                        setTimeout(function() {
+                            window.location.href = 'dashboard.html';
+                        }, 1500);
+                    } else {
+                        // Login fallido
+                        loginStatus.textContent = 'Matricula o contraseña incorrectos. Por favor, intente nuevamente.';
+                        loginStatus.classList.add('error');
+                        loginStatus.style.display = 'block';
+                    }
+                }, 1500); // Simular 1.5 segundos de espera
+            }
+        });
+        
+        // Verificar si el usuario ya inició sesión (opcional)
+        window.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('userLoggedIn') === 'true') {
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
