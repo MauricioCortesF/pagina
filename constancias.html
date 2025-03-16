@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNRC - Generador de Constancias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .navbar {
+            color: #5e0c31;
+            background-color: #5e0c31;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-container img {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo-container h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .user-profile img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            height: 100vh;
+            padding: 1rem 0;
+            position: fixed;
+            left: 0;
+            top: 64px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 900;
+        }
+        
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        
+        .menu-item {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            border-radius: 0;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .menu-item:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .menu-item.active {
+            background-color: #e8f0fe;
+            color: #5e0c31;
+            color: #5e0c31;
+            font-weight: bold;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .menu-icon {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            margin-left: 0px;
+            padding: 2rem;
+            margin-top: 64px;
+            transition: all 0.3s ease;
+        }
+        
+        .content.expanded {
+            margin-left: 70px;
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #5f6368;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+            color: #5f6368;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        
+        .form-control:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .preview-btn, .generate-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .preview-btn:hover, .generate-btn:hover {
+            background-color: #1765cc;
+        }
+        
+        .preview-btn {
+            background-color: white;
+            color: #1a73e8;
+            border: 1px solid #1a73e8;
+            margin-right: 1rem;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        
+        .preview-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .preview-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+            color: #1a73e8;
+        }
+        
+        #certificatePreview {
+            border: 1px solid #dadce0;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .certificate-header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #1a73e8;
+        }
+        
+        .certificate-logo {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+        }
+        
+        .certificate-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .certificate-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 3rem;
+        }
+        
+        .certificate-footer {
+            text-align: center;
+        }
+        
+        .certificate-signature {
+            margin-top: 4rem;
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 60%;
+            margin: 0 auto;
+            border-bottom: 1px solid #000;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="/api/placeholder/40/40" alt="Logo UNRC">
+            <h1>SisDoc UNRC</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="dashboard.html">Inicio</a>
+            <a href="#">Documentos</a>
+            <a href="#" class="active">Solicitudes</a>
+            <a href="#">Ayuda</a>
+        </div>
+        
+        <div class="user-profile">
+            <span id="userName">Juan Estudiante</span>
+            <img src="/api/placeholder/35/35" alt="Perfil">
+        </div>
+    </nav>
+  
+    <main class="content" id="content">
+        <h1 class="page-title">Generador de Constancias</h1>
+        
+        <div class="form-container">
+            <div class="form-section">
+                <h2 class="form-title">Datos de la Constancia</h2>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreInstitucion">Nombre de la Escuela/Institución:</label>
+                            <input type="text" id="nombreInstitucion" class="form-control" placeholder="Ej: Escuela Nacional de Río Cuarto">
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="claveIncorporacion">Clave de Incorporación:</label>
+                            <input type="text" id="claveIncorporacion" class="form-control" placeholder="Ej: UNRC-2025-001">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreAlumno">Nombre Completo del Alumno:</label>
+                            <input type="text" id="nombreAlumno" class="form-control" placeholder="Ej: Juan Carlos Pérez">
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="grado">Grado que Cursa:</label>
+                            <input type="text" id="grado" class="form-control" placeholder="Ej: Tercer Año">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="cicloEscolar">Ciclo Escolar:</label>
+                            <input type="text" id="cicloEscolar" class="form-control" placeholder="Ej: 2024-2025">
+                        </div>
+                    </div>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="nombreDirector">Nombre del Director/a:</label>
+                            <input type="text" id="nombreDirector" class="form-control" placeholder="Ej: Dra. María González">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="preview-btn" id="previewBtn">Vista Previa</button>
+                <button class="generate-btn" id="generateBtn">Generar PDF</button>
+            </div>
+        </div>
+        
+        <div class="preview-container" id="previewContainer">
+            <h2 class="preview-title">Vista Previa de la Constancia</h2>
+            
+            <div id="certificatePreview">
+                <div class="certificate-header">
+                    <img src="/api/placeholder/150/100" alt="Logo Institucional" class="certificate-logo">
+                    <h1 class="certificate-title">CONSTANCIA DE ESTUDIOS</h1>
+                </div>
+                
+                <div class="certificate-body" id="certificateContent">
+                    <!-- El contenido se llenará dinámicamente con JavaScript -->
+                </div>
+                
+                <div class="certificate-signature">
+                    <div class="signature-line"></div>
+                    <strong><span id="signatureName">NOMBRE DEL DIRECTOR/A</span></strong><br>
+                    DIRECTOR/A
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        <script>
+
+            <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const previewBtn = document.getElementById('previewBtn');
+        const generateBtn = document.getElementById('generateBtn');
+
+        if (previewBtn) {
+            previewBtn.addEventListener('click', function() {
+                const nombreInstitucion = document.getElementById('nombreInstitucion')?.value || '[NOMBRE DE LA INSTITUCIÓN]';
+                const claveIncorporacion = document.getElementById('claveIncorporacion')?.value || '[CLAVE]';
+                const nombreAlumno = document.getElementById('nombreAlumno')?.value || '[NOMBRE DEL ALUMNO]';
+                const grado = document.getElementById('grado')?.value || '[GRADO]';
+                const cicloEscolar = document.getElementById('cicloEscolar')?.value || '[CICLO ESCOLAR]';
+                const nombreDirector = document.getElementById('nombreDirector')?.value || '[NOMBRE DEL DIRECTOR/A]';
+
+                const content = `
+                    <p>Por medio de la presente, la institución <strong>${nombreInstitucion}</strong>, con clave de incorporación <strong>${claveIncorporacion}</strong>, certifica que el alumno <strong>${nombreAlumno}</strong> está inscrito y cursa el grado de <strong>${grado}</strong> durante el ciclo escolar <strong>${cicloEscolar}</strong>.</p>
+                    <p>Se expide la presente constancia a petición del interesado para los fines que estime convenientes.</p>
+                `;
+                
+                document.getElementById('certificateContent').innerHTML = content;
+                document.getElementById('signatureName').innerText = nombreDirector;
+                document.getElementById('previewContainer').style.display = 'block';
+            });
+        }
+
+        if (generateBtn) {
+            generateBtn.addEventListener('click', function() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(18);
+                doc.text('CONSTANCIA DE ESTUDIOS', 105, 30, { align: 'center' });
+                
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(12);
+                const textLines = [
+                    `Por medio de la presente, la institución ${document.getElementById('nombreInstitucion')?.value || '[NOMBRE DE LA INSTITUCIÓN]'},`,
+                    `con clave de incorporación ${document.getElementById('claveIncorporacion')?.value || '[CLAVE]'}, certifica que`,
+                    `el alumno ${document.getElementById('nombreAlumno')?.value || '[NOMBRE DEL ALUMNO]'} está inscrito y cursa el`,
+                    `grado de ${document.getElementById('grado')?.value || '[GRADO]'} durante el ciclo escolar ${document.getElementById('cicloEscolar')?.value || '[CICLO ESCOLAR]'}.`,
+                    '',
+                    'Se expide la presente constancia a petición del interesado para los fines que estime convenientes.'
+                ];
+                
+                let y = 50;
+                textLines.forEach(line => {
+                    doc.text(line, 20, y);
+                    y += 10;
+                });
+                
+                doc.text('_________________________', 70, 140);
+                doc.text(`${document.getElementById('nombreDirector')?.value || '[NOMBRE DEL DIRECTOR/A]'}`, 85, 150);
+                doc.text('DIRECTOR/A', 100, 160);
+                
+                doc.save('Constancia.pdf');
+            });
+        }
+    });
+</script>
