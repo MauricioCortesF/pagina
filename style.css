@@ -1,0 +1,454 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Basado en tu logo */
+    --main-dark-green: #2F4F4F; /* Un verde oscuro profundo, similar al fondo del logo */
+    --secondary-dark-green: #243D3D; /* Un tono un poco más oscuro para contrastes */
+    --xini-gold: #D4AF37;       /* El dorado del logo (puedes ajustar el hex si encuentras uno más exacto) */
+    --light-gold: #E5C351;      /* Un dorado un poco más claro para brillos o hover */
+    --cream-light: #F8F9FA;     /* Un color crema/blanco suave para fondos claros */
+    --white: #ffffff;
+    --text-dark: #333333; /* Un gris oscuro para texto general que no sea blanco */
+}
+
+body {
+    font-family: 'Georgia', serif;
+    line-height: 1.6;
+    color: var(--text-dark); /* Color de texto general cambiado a un gris oscuro */
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilos para la imagen del logo */
+.logo-img {
+    height: 50px; /* Ajusta el tamaño según sea necesario para que se vea bien */
+    width: auto;
+    /* margin-right: 10px; Si la imagen es el logo completo, no necesitas margen aquí */
+    vertical-align: middle; 
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--main-dark-green) 0%, var(--secondary-dark-green) 100%); /* Usamos los nuevos verdes oscuros */
+    color: white;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2rem; /* Puede que ya no necesites esto si el logo es solo imagen */
+    font-weight: bold; /* Puede que ya no necesites esto si el logo es solo imagen */
+    color: var(--xini-gold); /* El color del texto "XINI" si lo mantienes */
+}
+
+/* Si el logo es solo la imagen y no tienes texto "XINI" al lado: */
+/* .scales { display: none; } */ 
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: var(--xini-gold); /* Cambio a dorado al pasar el ratón */
+}
+
+.cta-button {
+    background: linear-gradient(45deg, var(--xini-gold), var(--light-gold)); /* Botón con gradiente dorado */
+    color: var(--main-dark-green); /* Texto del botón en verde oscuro */
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); /* Sombra con el tono dorado */
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--main-dark-green) 0%, var(--secondary-dark-green) 50%, var(--main-dark-green) 100%); /* Gradiente de verdes */
+    color: white;
+    padding: 120px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Mantengo el patrón de escalas con el color dorado como antes, pero puedes cambiarlo si lo deseas */
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="scales" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><text x="10" y="15" text-anchor="middle" fill="rgba(212,175,55,0.1)" font-size="12">⚖</text></pattern></defs><rect width="100" height="100" fill="url(%23scales)"/></svg>');
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilos para la imagen en el Hero Section */
+.hero-image {
+    max-width: 50%; /* Ajusta el tamaño de la imagen en el hero */
+    height: auto;
+   
+}
+
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: var(--xini-gold); /* Subtítulo en dorado */
+    font-style: italic;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--xini-gold), var(--light-gold)); /* Botón primario dorado */
+    color: var(--main-dark-green); /* Texto en verde oscuro */
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid var(--xini-gold); /* Borde dorado */
+}
+
+.btn-secondary:hover {
+    background: var(--xini-gold); /* Fondo dorado al pasar el ratón */
+    color: var(--main-dark-green); /* Texto en verde oscuro al pasar el ratón */
+}
+
+/* Features Section */
+.features {
+    padding: 80px 0;
+    background: var(--cream-light); /* Fondo crema claro */
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--main-dark-green); /* Título en verde oscuro */
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(45deg, var(--xini-gold), var(--main-dark-green)); /* Línea divisoria con gradiente dorado y verde */
+    border-radius: 2px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    /* Asegura que todas las filas tengan la misma altura */
+    grid-auto-rows: 1fr; 
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--main-dark-green); /* Borde superior en verde oscuro */
+
+    /* AGREGAR ESTO PARA MEJOR DISTRIBUCIÓN VERTICAL */
+    display: flex; /* Convierte la tarjeta en un contenedor flex */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible en la cuadrícula */
+    /* Ajusta la altura mínima para asegurar consistencia visual, especialmente si el contenido es corto */
+    min-height: 400px; 
+}
+
+.feature-card:nth-child(even) {
+    border-top-color: var(--xini-gold); /* Borde superior alterno en dorado */
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--main-dark-green); /* Icono en verde oscuro */
+}
+
+.feature-card:nth-child(even) .feature-icon {
+    color: var(--xini-gold); /* Icono alterno en dorado */
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem; /* Deja un poco de margen inferior para separación con el párrafo */
+    color: var(--main-dark-green); /* Título de tarjeta en verde oscuro */
+}
+
+.feature-card p {
+    color: var(--secondary-dark-green); /* Texto de tarjeta en un verde oscuro secundario */
+    line-height: 1.6;
+    /* Permite que el párrafo "crezca" y ocupe el espacio disponible */
+    flex-grow: 1; 
+    margin-bottom: 0; /* Elimina el margen inferior si ya estás usando flexbox para distribuir */
+}
+
+/* About Section */
+.about {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--main-dark-green) 0%, var(--secondary-dark-green) 100%); /* Fondo en gradiente de verdes oscuros */
+    color: white;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--xini-gold); /* Título en dorado */
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.about-visual {
+    text-align: center;
+    font-size: 8rem; /* Este font-size es para un icono, no afecta directamente la imagen */
+    color: var(--xini-gold); /* Este color es para un icono, no afecta directamente la imagen */
+    opacity: 0.8;
+}
+
+/* Stats Section */
+.stats {
+    padding: 60px 0;
+    background: var(--light-gold); /* Fondo dorado claro */
+    color: var(--main-dark-green); /* Texto en verde oscuro */
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    color: var(--main-dark-green); /* Número de estadística en verde oscuro */
+    margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--xini-gold) 0%, var(--light-gold) 100%); /* Fondo en gradiente dorado */
+    color: var(--main-dark-green); /* Texto en verde oscuro */
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.btn-dark {
+    background: var(--main-dark-green); /* Botón oscuro en verde oscuro */
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+    background: var(--secondary-dark-green); /* Verde oscuro secundario al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(47, 79, 79, 0.3); /* Sombra con el tono verde */
+}
+
+/* Footer */
+footer {
+    background: var(--main-dark-green); /* Fondo del footer en verde oscuro */
+    color: white;
+    padding: 40px 0 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    color: var(--xini-gold); /* Títulos de sección en dorado */
+    margin-bottom: 1rem;
+}
+
+.footer-section a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.footer-section a:hover {
+    opacity: 1;
+    color: var(--xini-gold); /* Enlaces en dorado al pasar el ratón */
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--secondary-dark-green); /* Borde superior en verde oscuro secundario */
+    padding-top: 20px;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .about-visual {
+        font-size: 4rem; /* Mantengo esto por si en el futuro se usa un icono */
+    }
+
+    /* NEW: Asegura que la imagen dentro de about-visual se adapte */
+    .about-logo-visual {
+        max-width: 80%; /* Ajusta el tamaño de la imagen */
+        height: auto; /* Mantiene la proporción */
+        margin: 0 auto; /* Centra la imagen */
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
